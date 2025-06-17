@@ -9,15 +9,15 @@ export class User extends BaseEntity {
   @Column({ unique: true })
   username: string;
 
-  @Column({ nullable: true })
-  avatar_url?: string;
+  @Column({ name: 'avatar_url', nullable: true })
+  avatarUrl?: string;
 
-  @Column({ default: true })
-  is_active: boolean;
+  @Column({ name: 'is_active', default: true })
+  isActive: boolean;
 
-  @Column({ default: false })
-  is_admin: boolean;
+  @Column({ name: 'is_admin', default: false })
+  isAdmin: boolean;
 
-  @Column({ nullable: true })
-  last_login?: Date;
+  @Column({ name: 'last_login', nullable: true })
+  lastLogin?: Date;
 }

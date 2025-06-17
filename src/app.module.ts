@@ -1,30 +1,37 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { ConfigModule } from '@nestjs/config';
 import { PostModule } from './modules/post/post.module';
 import { CommentModule } from './modules/comment/comment.module';
 import { AuthModule } from './modules/auth/auth.module';
-import { AdminModule } from './modules/admin/admin.module';
 import { FileModule } from './modules/file/file.module';
 import { CategoryModule } from './modules/category/category.module';
 import { UserModule } from './modules/user/user.module';
-import { typeOrmConfig } from './config/typeorm.config';
 import { TagModule } from './modules/tag/tag.module';
+import { APP_INTERCEPTOR } from '@nestjs/core';
+import { TransformInterceptor } from './common/interceptors/transform.interceptor';
+import { ormConfig } from './config/typeorm.config';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot(typeOrmConfig),
+    ConfigModule.forRoot({
+      envFilePath: `.env.${process.env.NODE_ENV || 'development'}`,
+      isGlobal: true,
+    }),
+    TypeOrmModule.forRootAsync(ormConfig),
     PostModule,
     CommentModule,
     AuthModule,
-    AdminModule,
     FileModule,
     CategoryModule,
     UserModule,
     TagModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: TransformInterceptor,
+    },
+  ],
 })
 export class AppModule {}

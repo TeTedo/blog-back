@@ -1,8 +1,7 @@
 import { Entity, Column, ManyToOne, JoinColumn } from 'typeorm';
 import { BaseEntity } from '../../../common/entities/base.entity';
-import { Admin } from '../../admin/entities/admin.entity';
 import { Post } from '../../post/entities/post.entity';
-
+import { User } from '../../user/entities/user.entity';
 @Entity('comments')
 export class Comment extends BaseEntity {
   @Column('text')
@@ -11,9 +10,9 @@ export class Comment extends BaseEntity {
   @Column()
   author_id: string;
 
-  @ManyToOne(() => Admin)
+  @ManyToOne(() => User)
   @JoinColumn({ name: 'author_id' })
-  author: Admin;
+  author: User;
 
   @ManyToOne(() => Post)
   @JoinColumn({ name: 'post_id' })

@@ -1,6 +1,6 @@
 import { Entity, Column, ManyToOne, JoinColumn } from 'typeorm';
 import { BaseEntity } from '../../../common/entities/base.entity';
-import { Admin } from '../../admin/entities/admin.entity';
+import { User } from '../../user/entities/user.entity';
 
 @Entity('files')
 export class File extends BaseEntity {
@@ -41,9 +41,9 @@ export class File extends BaseEntity {
   @Column()
   uploaded_by: string;
 
-  @ManyToOne(() => Admin)
+  @ManyToOne(() => User)
   @JoinColumn({ name: 'uploaded_by' })
-  uploader: Admin;
+  uploader: User;
 
   @Column({ default: false })
   is_public: boolean;

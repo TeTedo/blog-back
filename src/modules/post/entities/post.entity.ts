@@ -1,8 +1,8 @@
 import { Entity, Column, ManyToOne, JoinColumn, ManyToMany } from 'typeorm';
 import { BaseEntity } from '../../../common/entities/base.entity';
-import { Admin } from '../../admin/entities/admin.entity';
 import { Category } from '../../category/entities/category.entity';
 import { Tag } from '../../tag/entities/tag.entity';
+import { User } from 'src/modules/user/entities/user.entity';
 
 @Entity('posts')
 export class Post extends BaseEntity {
@@ -15,9 +15,9 @@ export class Post extends BaseEntity {
   @Column({ unique: true })
   slug: string;
 
-  @ManyToOne(() => Admin)
+  @ManyToOne(() => User)
   @JoinColumn({ name: 'author_id' })
-  author: Admin;
+  author: User;
 
   @Column({
     type: 'enum',
